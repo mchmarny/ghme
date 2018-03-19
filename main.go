@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	appName = "github-teams-utils"
+	appName    = "github-teams-utils"
+	appVersion = "0.1.0"
 )
 
 var (
@@ -32,7 +33,7 @@ func main() {
 	app.Name = appName
 	app.Usage = "Manages GitHub teams"
 	app.Compiled = time.Now()
-	app.Version = "0.1.0"
+	app.Version = appVersion
 	app.HideHelp = false
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
@@ -63,7 +64,7 @@ func main() {
 			return PrintUser(username)
 		}
 
-		fmt.Println("No arguments provided, here are some samples:\n")
+		fmt.Println("No arguments provided, here are some samples...")
 
 		fmt.Println("List teams in organization:")
 		fmt.Printf("%s -o my-org-name\n\n", appName)
@@ -118,14 +119,11 @@ func main() {
 }
 
 func configure(c *cli.Context) error {
-
 	token := c.GlobalString("token")
 	if token == "" {
 		return fmt.Errorf("access token required")
 	}
-
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
 	client = github.NewClient(oauth2.NewClient(ctx, ts))
-
 	return nil
 }
