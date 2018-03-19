@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	appName    = "github-teams-utils"
-	appVersion = "0.1.0"
+	appName    = "ghutils"
+	appVersion = "0.2.0"
 )
 
 var (
@@ -31,7 +31,7 @@ func main() {
 
 	app := cli.NewApp()
 	app.Name = appName
-	app.Usage = "Manages GitHub teams"
+	app.Usage = "GitHub helper utility"
 	app.Compiled = time.Now()
 	app.Version = appVersion
 	app.HideHelp = false

@@ -1,6 +1,6 @@
 
 # Go parameters
-BINARY_NAME=github-teams-utils
+BINARY_NAME=ghutils
 
 all: test
 

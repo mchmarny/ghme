@@ -1,4 +1,4 @@
-# github-teams-utils [![Build Status](https://travis-ci.org/mchmarny/github-teams-utils.svg?branch=master)](https://travis-ci.org/mchmarny/github-teams-utils)
+# ghutils [![Build Status](https://travis-ci.org/mchmarny/ghutils.svg?branch=master)](https://travis-ci.org/mchmarny/ghutils)
 
 Collection of simple utilities for GitHub teams
 
@@ -9,13 +9,13 @@ Create [Personal access tokens](https://github.com/settings/tokens) with `admin:
 ## Use
 
 List teams in organization:
-`github-teams-utils -o my-org-name`
+`ghutils -o my-org-name`
 
 Print user details:
-`github-teams-utils -u someuser`
+`ghutils -u someuser`
 
 Add user to team:
-`github-teams-utils add -u someuser -t 1234567`
+`ghutils add -u someuser -t 1234567`
 
 
 
