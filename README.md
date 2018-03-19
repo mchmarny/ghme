@@ -1,4 +1,4 @@
-# ghutils [![Build Status](https://travis-ci.org/mchmarny/ghutils.svg?branch=master)](https://travis-ci.org/mchmarny/ghutils)
+# ghutils [![Build Status](https://travis-ci.org/mchmarny/ghutils.svg?branch=master)](https://travis-ci.org/mchmarny/ghutils) [![Go Report Card](https://goreportcard.com/badge/github.com/mchmarny/ghutils)](https://goreportcard.com/report/github.com/mchmarny/ghutils)
 
 Collection of simple utilities for GitHub teams
 
