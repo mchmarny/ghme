@@ -15,7 +15,7 @@ Print user details:
 `github-teams-utils -u someuser`
 
 Add user to team:
-`github-teams-utils add -user someuser -team 1234567`
+`github-teams-utils add -u someuser -t 1234567`
 
 
 
