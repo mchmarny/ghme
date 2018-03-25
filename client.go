@@ -10,15 +10,14 @@ import (
 )
 
 // PrintUser prints one user
-func PrintUser(user string) error {
+func PrintUser(username string) error {
 
-	if user == "" {
+	if username == "" {
 		return fmt.Errorf("user argument required")
 	}
 
-	fmt.Printf("\nGetting user: %s\n\n", user)
-
-	usr, _, err := client.Users.Get(ctx, user)
+	fmt.Printf("\nGetting user: %s\n\n", username)
+	usr, _, err := client.Users.Get(ctx, username)
 	if err != nil {
 		return err
 	}
@@ -32,6 +31,7 @@ func PrintUser(user string) error {
 	fmt.Printf("Company: %s\n", usr.GetCompany())
 
 	fmt.Println()
+
 	return nil
 }
 
@@ -43,30 +43,13 @@ func PrintTeams(org string) error {
 	}
 
 	fmt.Println()
-	teams, err := GetTeams(org)
-	if err != nil {
-		fmt.Printf("Error listing teams: %v\n", err)
-		return err
-	}
-	for _, e := range teams {
-		fmt.Printf("%d - %v\n", e.GetID(), *e.Name)
-	}
-	fmt.Println()
-	return nil
-}
 
-// GetTeams retreaves teams for specific org
-func GetTeams(org string) (teams []*github.Team, err error) {
-
-	opt := &github.ListOptions{
-		PerPage: 10,
-	}
-
+	opt := &github.ListOptions{PerPage: 10}
 	var allItems []*github.Team
 	for {
 		list, resp, err := client.Organizations.ListTeams(ctx, org, opt)
 		if err != nil {
-			return allItems, err
+			return err
 		}
 		allItems = append(allItems, list...)
 		if resp.NextPage == 0 {
@@ -75,8 +58,11 @@ func GetTeams(org string) (teams []*github.Team, err error) {
 		opt.Page = resp.NextPage
 	}
 
-	return allItems, nil
-
+	for _, e := range allItems {
+		fmt.Printf("%d - %v\n", e.GetID(), *e.Name)
+	}
+	fmt.Println()
+	return nil
 }
 
 // AddUserToTeam adds user to the specified team

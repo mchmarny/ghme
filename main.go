@@ -51,7 +51,7 @@ func main() {
 		},
 	}
 	app.Before = func(c *cli.Context) error {
-		return configure(c)
+		return configClient(c)
 	}
 	app.Action = func(c *cli.Context) error {
 		org := c.String("org")
@@ -118,7 +118,7 @@ func main() {
 
 }
 
-func configure(c *cli.Context) error {
+func configClient(c *cli.Context) error {
 	token := c.GlobalString("token")
 	if token == "" {
 		return fmt.Errorf("access token required")
