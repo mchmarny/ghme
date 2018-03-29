@@ -107,6 +107,13 @@ func main() {
 				return AddUserToTeam(team, user)
 			},
 		},
+		{
+			Name:  "notif",
+			Usage: "Lists your notifications",
+			Action: func(c *cli.Context) error {
+				return GetMyNotifications()
+			},
+		},
 	}
 
 	err := app.Run(os.Args)

@@ -9,6 +9,41 @@ import (
 	"github.com/google/go-github/github"
 )
 
+// GetMyNotifications prints your own notifications
+func GetMyNotifications() error {
+
+	fmt.Println()
+
+	opt := &github.NotificationListOptions{
+		All:           true,
+		Participating: true,
+		ListOptions: github.ListOptions{
+			PerPage: 100,
+		},
+	}
+
+	var allItems []*github.Notification
+	for {
+		list, resp, err := client.Activity.ListNotifications(ctx, opt)
+		if err != nil {
+			return err
+		}
+		allItems = append(allItems, list...)
+		if resp.NextPage == 0 {
+			break
+		}
+		opt.Page = resp.NextPage
+	}
+
+	for _, n := range allItems {
+		fmt.Printf("[%s] %s:%s - %s (%s)\n",
+			*n.Repository.Name, *n.Subject.Type, *n.Reason, *n.Subject.Title, *n.Subject.URL)
+	}
+	fmt.Println()
+	return nil
+
+}
+
 // PrintUser prints one user
 func PrintUser(username string) error {
 
