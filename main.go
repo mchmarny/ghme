@@ -75,6 +75,9 @@ func main() {
 		fmt.Println("Add user to team:")
 		fmt.Printf("%s add -user someuser -team 1234567\n\n", appName)
 
+		fmt.Println("List notifications:")
+		fmt.Printf("%s notif\n\n", appName)
+
 		return nil
 	}
 	app.Commands = []cli.Command{

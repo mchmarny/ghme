@@ -37,7 +37,7 @@ func GetMyNotifications() error {
 
 	for _, n := range allItems {
 		fmt.Printf("[%s] %s:%s - %s (%s)\n",
-			*n.Repository.Name, *n.Subject.Type, *n.Reason, *n.Subject.Title, *n.Subject.URL)
+			*n.Repository.Name, *n.Subject.Type, *n.Reason, *n.Subject.Title, *n.URL)
 	}
 	fmt.Println()
 	return nil
