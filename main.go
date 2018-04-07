@@ -50,73 +50,11 @@ func main() {
 			Usage: "Github username",
 		},
 	}
-	app.Before = func(c *cli.Context) error {
-		return configClient(c)
-	}
-	app.Action = func(c *cli.Context) error {
-		org := c.String("org")
-		username := c.String("user")
-
-		if org != "" {
-			return PrintTeams(org)
-		}
-		if username != "" {
-			return PrintUser(username)
-		}
-
-		fmt.Println("No arguments provided, here are some samples...")
-
-		fmt.Println("List teams in organization:")
-		fmt.Printf("%s -o my-org-name\n\n", appName)
-
-		fmt.Println("Print user details:")
-		fmt.Printf("%s -u someuser\n\n", appName)
-
-		fmt.Println("Add user to team:")
-		fmt.Printf("%s add -user someuser -team 1234567\n\n", appName)
-
-		fmt.Println("List notifications:")
-		fmt.Printf("%s notif\n\n", appName)
-
-		return nil
-	}
+	app.Before = configClient
+	app.Action = defaultAction
 	app.Commands = []cli.Command{
-		{
-			Name:  "add",
-			Usage: "Add user to GitHub team",
-			Flags: []cli.Flag{
-				cli.Int64Flag{
-					Name:  "team, t",
-					Usage: "GitHub Team ID",
-				},
-				cli.StringFlag{
-					Name:  "user, u",
-					Usage: "GitHub username",
-				},
-			},
-			Action: func(c *cli.Context) error {
-
-				team := c.Int64("team")
-				user := c.String("user")
-
-				if team == 0 {
-					return fmt.Errorf("team argument required")
-				}
-
-				if user == "" {
-					return fmt.Errorf("user argument required")
-				}
-
-				return AddUserToTeam(team, user)
-			},
-		},
-		{
-			Name:  "notif",
-			Usage: "Lists your notifications",
-			Action: func(c *cli.Context) error {
-				return GetMyNotifications()
-			},
-		},
+		addUserToTeamCommand,
+		getNotificationsCommand,
 	}
 
 	err := app.Run(os.Args)
@@ -135,5 +73,33 @@ func configClient(c *cli.Context) error {
 	}
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
 	client = github.NewClient(oauth2.NewClient(ctx, ts))
+	return nil
+}
+
+func defaultAction(c *cli.Context) error {
+	org := c.String("org")
+	username := c.String("user")
+
+	if org != "" {
+		return printTeams(org)
+	}
+	if username != "" {
+		return printUser(username)
+	}
+
+	fmt.Println("No arguments provided, here are some samples...")
+
+	fmt.Println("List teams in organization:")
+	fmt.Printf("%s -o my-org-name\n\n", appName)
+
+	fmt.Println("Print user details:")
+	fmt.Printf("%s -u someuser\n\n", appName)
+
+	fmt.Println("Add user to team:")
+	fmt.Printf("%s add -user someuser -team 1234567\n\n", appName)
+
+	fmt.Println("List notifications:")
+	fmt.Printf("%s notif\n\n", appName)
+
 	return nil
 }

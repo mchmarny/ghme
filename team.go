@@ -7,71 +7,42 @@ import (
 	"os"
 
 	"github.com/google/go-github/github"
+	"github.com/urfave/cli"
 )
 
-// GetMyNotifications prints your own notifications
-func GetMyNotifications() error {
+var (
+	addUserToTeamCommand = cli.Command{
+		Name:  "add",
+		Usage: "Add user to GitHub team",
+		Flags: []cli.Flag{
+			cli.Int64Flag{
+				Name:  "team, t",
+				Usage: "GitHub Team ID",
+			},
+			cli.StringFlag{
+				Name:  "user, u",
+				Usage: "GitHub username",
+			},
+		},
+		Action: func(c *cli.Context) error {
 
-	fmt.Println()
+			team := c.Int64("team")
+			user := c.String("user")
 
-	opt := &github.NotificationListOptions{
-		All:           true,
-		Participating: true,
-		ListOptions: github.ListOptions{
-			PerPage: 100,
+			if team == 0 {
+				return fmt.Errorf("team argument required")
+			}
+
+			if user == "" {
+				return fmt.Errorf("user argument required")
+			}
+
+			return addUserToTeam(team, user)
 		},
 	}
+)
 
-	var allItems []*github.Notification
-	for {
-		list, resp, err := client.Activity.ListNotifications(ctx, opt)
-		if err != nil {
-			return err
-		}
-		allItems = append(allItems, list...)
-		if resp.NextPage == 0 {
-			break
-		}
-		opt.Page = resp.NextPage
-	}
-
-	for _, n := range allItems {
-		fmt.Printf("[%s] %s:%s - %s (%s)\n",
-			*n.Repository.Name, *n.Subject.Type, *n.Reason, *n.Subject.Title, *n.URL)
-	}
-	fmt.Println()
-	return nil
-
-}
-
-// PrintUser prints one user
-func PrintUser(username string) error {
-
-	if username == "" {
-		return fmt.Errorf("user argument required")
-	}
-
-	fmt.Printf("\nGetting user: %s\n\n", username)
-	usr, _, err := client.Users.Get(ctx, username)
-	if err != nil {
-		return err
-	}
-
-	fmt.Printf("ID: %d\n", usr.ID)
-	fmt.Printf("Name: %s\n", usr.GetName())
-	fmt.Printf("Login: %s\n", usr.GetLogin())
-	fmt.Printf("Email: %s\n", usr.GetEmail())
-	fmt.Printf("Location: %s\n", usr.GetLocation())
-	fmt.Printf("Created: %v\n", usr.GetCreatedAt())
-	fmt.Printf("Company: %s\n", usr.GetCompany())
-
-	fmt.Println()
-
-	return nil
-}
-
-// PrintTeams prints teams and its members
-func PrintTeams(org string) error {
+func printTeams(org string) error {
 
 	if org == "" {
 		return fmt.Errorf("org argument required")
@@ -100,8 +71,7 @@ func PrintTeams(org string) error {
 	return nil
 }
 
-// AddUserToTeam adds user to the specified team
-func AddUserToTeam(teamID int64, username string) error {
+func addUserToTeam(teamID int64, username string) error {
 
 	// validation
 	if teamID == 0 || username == "" {
