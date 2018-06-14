@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/google/go-github/github"
 )
 
 func printUser(username string) error {
@@ -11,7 +13,7 @@ func printUser(username string) error {
 	}
 
 	fmt.Printf("\nGetting user: %s\n\n", username)
-	usr, _, err := client.Users.Get(ctx, username)
+	usr, err := getUser(username)
 	if err != nil {
 		return err
 	}
@@ -27,4 +29,24 @@ func printUser(username string) error {
 	fmt.Println()
 
 	return nil
+}
+
+func getUser(username string) (usr *github.User, err error) {
+
+	if username == "" {
+		return nil, fmt.Errorf("user argument required")
+	}
+
+	fmt.Printf("\nGetting user: %s\n", username)
+	u, _, e := client.Users.Get(ctx, username)
+
+	return u, e
+}
+
+func getUserByID(id int64) (usr *github.User, err error) {
+
+	fmt.Printf("\nGetting user for ID: %d\n", id)
+	u, _, e := client.Users.GetByID(ctx, id)
+
+	return u, e
 }

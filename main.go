@@ -55,6 +55,7 @@ func main() {
 	app.Commands = []cli.Command{
 		addUserToTeamCommand,
 		getNotificationsCommand,
+		listOrgMemberCommand,
 	}
 
 	err := app.Run(os.Args)

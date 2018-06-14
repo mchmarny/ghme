@@ -18,5 +18,5 @@ clean:
 	rm -f ./bin/$(BINARY_NAME)
 
 deps:
-	go get -u github.com/tools/godep
-	godep restore
+	go get -u github.com/golang/dep/cmd/dep
+	dep ensure

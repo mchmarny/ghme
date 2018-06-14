@@ -11,6 +11,9 @@ Create [Personal access tokens](https://github.com/settings/tokens) with `admin:
 List teams in organization:
 `ghutils -o my-org-name`
 
+List users in organization:
+`ghutils -o my-org-name`
+
 Print user details:
 `ghutils -u someuser`
 
