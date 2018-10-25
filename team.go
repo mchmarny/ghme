@@ -53,7 +53,7 @@ func printTeams(org string) error {
 	opt := &github.ListOptions{PerPage: 10}
 	var allItems []*github.Team
 	for {
-		list, resp, err := client.Organizations.ListTeams(ctx, org, opt)
+		list, resp, err := client.Teams.ListTeams(ctx, org, opt)
 		if err != nil {
 			return err
 		}
@@ -87,7 +87,7 @@ func addUserToTeam(teamID int64, username string) error {
 	// end user
 
 	// team
-	team, _, err := client.Organizations.GetTeam(ctx, teamID)
+	team, _, err := client.Teams.GetTeam(ctx, teamID)
 	if err != nil {
 		return err
 	}
@@ -104,7 +104,7 @@ func addUserToTeam(teamID int64, username string) error {
 	//end prompt
 
 	// is already member
-	isMember, _, err := client.Organizations.IsTeamMember(ctx, teamID, username)
+	isMember, _, err := client.Teams.IsTeamMember(ctx, teamID, username)
 	if err != nil {
 		return err
 	}
@@ -115,8 +115,8 @@ func addUserToTeam(teamID int64, username string) error {
 	// end if member
 
 	// add user
-	opt := &github.OrganizationAddTeamMembershipOptions{}
-	_, _, err = client.Organizations.AddTeamMembership(ctx, teamID, username, opt)
+	opt := &github.TeamAddTeamMembershipOptions{}
+	_, _, err = client.Teams.AddTeamMembership(ctx, teamID, username, opt)
 	if err != nil {
 		return err
 	}

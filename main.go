@@ -81,11 +81,17 @@ func defaultAction(c *cli.Context) error {
 	org := c.String("org")
 	username := c.String("user")
 
+	if org != "" && username != "" {
+		// return printTeams(org)
+		return printUser(org, username)
+	}
+
 	if org != "" {
 		return printTeams(org)
 	}
+
 	if username != "" {
-		return printUser(username)
+		return printUser(org, username)
 	}
 
 	fmt.Println("No arguments provided, here are some samples...")

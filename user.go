@@ -6,7 +6,7 @@ import (
 	"github.com/google/go-github/github"
 )
 
-func printUser(username string) error {
+func printUser(org, username string) error {
 
 	if username == "" {
 		return fmt.Errorf("user argument required")
@@ -49,4 +49,26 @@ func getUserByID(id int64) (usr *github.User, err error) {
 	u, _, e := client.Users.GetByID(ctx, id)
 
 	return u, e
+}
+
+func getUserOrgActivity(org, usr string) (list []*github.Event, err error) {
+
+	fmt.Printf("\nGetting user %s activity for %s\n", org, usr)
+
+	opt := &github.ListOptions{PerPage: 10}
+	var events []*github.Event
+	for {
+		list, resp, err := client.Activity.ListUserEventsForOrganization(
+			ctx, org, usr, opt)
+		if err != nil {
+			return nil, err
+		}
+		events = append(events, list...)
+		if resp.NextPage == 0 {
+			break
+		}
+		opt.Page = resp.NextPage
+	}
+
+	return events, nil
 }

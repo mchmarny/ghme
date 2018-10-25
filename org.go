@@ -60,9 +60,22 @@ func printOrgMembers(org string) error {
 	for _, e := range allItems {
 		usr, err := getUserByID(e.GetID())
 		if err != nil {
-			fmt.Printf("Error while getting user ID:%d - %v\n", e.GetID(), err)
+			fmt.Printf("Error while getting user ID:%d - %v\n",
+				e.GetID(), err)
 		} else {
-			fmt.Printf("%d - %s (%s <%s>)\n", usr.GetID(), usr.GetLogin(), usr.GetName(), usr.GetEmail())
+			fmt.Printf("%d - %s (%s <%s>)\n",
+				usr.GetID(), usr.GetLogin(), usr.GetName(), usr.GetEmail())
+
+			act, er := getUserOrgActivity(org, usr.GetLogin())
+			if er != nil {
+				fmt.Printf("Error while getting user activity for %s - %v\n",
+					e.GetName(), er)
+			} else {
+				for i, a := range act {
+					fmt.Printf("[%d] %s - %s - %s\n",
+						i, a.CreatedAt, *a.Repo.Name, *a.Type)
+				}
+			}
 		}
 	}
 	fmt.Println()
