@@ -1,34 +1,35 @@
-venv
-.idea
-*.iml
-*.pyc
-nosetests.xml
-gotest.out
-tests.xml
-*_local.py
-build
-dist
-capper.egg-info
-logs/*
-supervisord.pid
-.ropeproject
-.zone
-.vagrant/*
-.vscode/*
-.dev
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Mac
 .DS_Store
 
-## Coverage Files
-cover.out
-coverage.xml
+# bin
+bin
 
-!**/.gitkeep
+# releases 
+release
 
-## don't commit local config override files
-config_local.py
-vendor/*
-_vendor-*
+# Test binary, built with `go test -c`
+*.test
+test/
 
-## bin
-bin/
-ghutils
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+coverage.txt
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+# test
+test.json
+
+
+
+
+
+
