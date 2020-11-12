@@ -94,7 +94,7 @@ func writeRepoList(client *github.Client, path string) error {
 			Arg:      r.GetHTMLURL(),
 			UID:      r.GetID(),
 			Title:    r.GetName(),
-			Subtitle: r.GetDescription(),
+			Subtitle: r.GetHTMLURL(),
 		}
 		items = append(items, i)
 	}

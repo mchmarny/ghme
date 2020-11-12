@@ -1,5 +1,5 @@
 APP_NAME         =ghme
-RELEASE_VERSION  =v0.5.0
+RELEASE_VERSION  =v0.5.1
 LINTER_VERSION   =v1.31.0
 
 all: help
