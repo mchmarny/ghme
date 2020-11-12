@@ -10,7 +10,11 @@ Download the [latest release of the workflow](https://github.com/mchmarny/ghme/r
 
 ## Configuration
 
-Create [Personal access tokens](https://github.com/settings/tokens) with sufficient rights to query API and list repositories.
+Create [Personal access tokens](https://github.com/settings/tokens) with sufficient rights to query API for list of all public and private repositories. 
+
+> Check only `public_repo` box if you want to scope your searches to only public directories
+
+![](img/token.png)
 
 Once you have the token, run `repo-config` to enter the token and cache your repos 
 
