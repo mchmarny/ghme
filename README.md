@@ -2,23 +2,25 @@
 
 Alfred workflow for navigating to repositories. 
 
-## Setup
+![](img/search.png)
+
+## Install 
+
+Download the [latest release of the workflow](https://github.com/mchmarny/ghme/releases/latest) and open it with Alfred.
+
+## Configuration
 
 Create [Personal access tokens](https://github.com/settings/tokens) with sufficient rights to query API and list repositories.
 
-## Use
+Once you have the token, run `repo-config` to enter the token and cache your repos 
 
-Load repositories 
+> `ghme` does not store your token so to refresh the list of locally cached repos you will have to re-run this step 
 
-```shell
-`ghme load --token $GITHUB_TOKEN --file repos.json`
-```
+![](img/config.png)
 
-Query repositories 
+## Workflow 
 
-```shell
-`ghme query --file repos.json --value demo`
-```
+![](img/workflow.png)
 
 ## Disclaimer
 
